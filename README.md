@@ -6,10 +6,10 @@
 
 * 智能指针
 * 线程池
+* 虚函数
 ## todo
 
 * 内存池
-* 虚函数
 * Cmake
 * 静态链接和动态链接，使用objdump等工具验证
 * double buffer
