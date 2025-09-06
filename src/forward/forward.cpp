@@ -3,6 +3,7 @@ using namespace std;
 #define PRINT(x) cout<<#x<<":"<<x<<endl;
 
 
+
 template <typename T>
 struct my_remove_reference{
     typedef T type;
@@ -19,6 +20,11 @@ template <typename T>
 struct my_remove_reference<T&&>{
     typedef T type;
 };
+
+template <typename T>
+typename my_remove_reference<T>::type&& my_move(T&& argv){
+    return static_cast<typename my_remove_reference<T>::type &&>(argv);
+}
 
 template <typename T>
 T&& my_forward(typename my_remove_reference<T>::type & argv){
@@ -43,5 +49,5 @@ void wrapper(T&& x){
 int main(){
     int a =1;
     wrapper(a);
-    wrapper(std::move(a));
+    wrapper(my_move(a));
 }
