@@ -20,7 +20,7 @@ private:
 
 public:
     shared_ptr() : ptr_(nullptr), ref_count_(nullptr) {};
-    explicit shared_ptr(T *ptr) : ptr_(ptr), ref_count_(ptr? new size_t(1): nullptr) {}
+    explicit shared_ptr(T *ptr) : ptr_(ptr), ref_count_(ptr? new atomic<size_t>(1): nullptr) {}
 
     shared_ptr(const shared_ptr &other) : ptr_(other.ptr_), ref_count_(other.ref_count_)
     {
