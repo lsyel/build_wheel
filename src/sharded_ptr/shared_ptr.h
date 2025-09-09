@@ -1,16 +1,17 @@
 #pragma once
+#include <atomic>
 template <typename T>
 class shared_ptr
 {
 private:
     T *ptr_;
     size_t *ref_count_;
+    std::atomic<size_t>* ref_count_;
     void release()
     {
         if (ref_count_)
         {
-            (*ref_count_)--;
-            if (*ref_count_ == 0)
+            if (ref_count_->fetch_sub(1) == 1) 
             {
                 delete ptr_;
                 delete ref_count_;
@@ -26,7 +27,7 @@ public:
     {
         if (ref_count_)
         {
-            (*ref_count_)++;
+            ref_count_->fetch_add(1);
         }
     }
 
@@ -85,7 +86,7 @@ public:
 
     size_t use_count() const
     {
-        return ref_count_ ? *ref_count_ : 0;
+        return ref_count_ ? ref_count_->load() : 0; // ← 推荐改这一行
     }
 
     bool empty() const
