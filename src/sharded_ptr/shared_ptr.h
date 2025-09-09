@@ -5,7 +5,6 @@ class shared_ptr
 {
 private:
     T *ptr_;
-    size_t *ref_count_;
     std::atomic<size_t>* ref_count_;
     void release()
     {
