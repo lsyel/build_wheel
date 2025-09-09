@@ -103,7 +103,7 @@ public:
     {
         release();
         ptr_ = p;
-        ref_count_ = p ? new size_t(1) : nullptr;
+        ref_count_ = p ? new atomic<int>(1) : nullptr;
     }
 
 };
